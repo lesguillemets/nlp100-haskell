@@ -1,5 +1,6 @@
 module OneSeven where
 
+-- TODO : try Text.format
 f :: (Show a, Show b)  => a -> String -> b -> String
 f x y z = concat [show x, "時の", y, "は", show z]
 -- |
