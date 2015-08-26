@@ -2,7 +2,9 @@ import Text.Parsec
 import Data.Either
 
 entry :: Parsec String u [(String, String)]
-entry = (char '{' >> spaces) *> many pair <* (spaces >> char '}' >> spaces)
+entry = char '{' *> spaces *>
+              pair `sepBy` (spaces >> char ',' >> spaces)
+              <* spaces <* char '}' <* spaces
 
 pair :: Parsec String u (String, String)
 pair = do
@@ -25,3 +27,5 @@ quotedText = concat <$> many (
 
 main = do
     parseTest entry "{\"te\\\"xt\": \"hi\"}"
+    readFile "./jawiki-country.json" >>=
+        print . last . rights . map (parse entry "foo") . lines
