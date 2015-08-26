@@ -33,6 +33,6 @@ quotedText = T.concat . map T.pack <$> many (
 
 -- text gives about x1.5 speed
 main = TI.readFile "./jawiki-country.json" >>=
-    TI.writeFile "./uk.json" . T.replace "\\n" "\n" .
+    TI.writeFile "./uk.txt" . T.replace "\\n" "\n" .
     (! "text") . head . filter ((== "イギリス") . (! "title")) .
         map M.fromList . rights . map (parse entry "") . T.lines
