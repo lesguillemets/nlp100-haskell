@@ -1,12 +1,18 @@
+{-# LANGUAGE OverloadedStrings #-}
 import Text.Parsec
 import Data.Either
+import qualified Data.Text as T
+import Data.Text (Text)
+import qualified Data.Text.IO as TI
+import qualified Data.Map as M
+import Data.Map ((!))
 
-entry :: Parsec String u [(String, String)]
+entry :: Parsec Text u [(Text, Text)]
 entry = char '{' *> spaces *>
               pair `sepBy` (spaces >> char ',' >> spaces)
               <* spaces <* char '}' <* spaces
 
-pair :: Parsec String u (String, String)
+pair :: Parsec Text u (Text, Text)
 pair = do
     k <- jsonQuoted
     _ <- spaces >> char ':' >> spaces
@@ -17,15 +23,15 @@ dQuote = char '"'
 
 jsonQuoted = dQuote *> quotedText <* dQuote
 
-quotedText :: Parsec String u String
-quotedText = concat <$> many (
+quotedText :: Parsec Text u Text
+quotedText = T.concat . map T.pack <$> many (
                              many1 (noneOf "\"\\")
                             <|>
                              sequence [char '\\', anyChar]
                              )
     
 
-main = do
-    parseTest entry "{\"te\\\"xt\": \"hi\"}"
-    readFile "./jawiki-country.json" >>=
-        print . last . rights . map (parse entry "foo") . lines
+main = TI.readFile "./jawiki-country.json" >>=
+    TI.writeFile "./uk.json" .
+    (! "text") . head . filter ((== "イギリス") . (! "title")) .
+        map M.fromList . rights . map (parse entry "") . T.lines
