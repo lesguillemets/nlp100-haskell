@@ -1,7 +1,6 @@
 {-# LANGUAGE DisambiguateRecordFields #-}
 {-# LANGUAGE RecordWildCards #-}
 import Text.Parsec
-import Data.Either (rights)
 
 type Level = Int
 data Section = Section { _level :: Level, _text :: String}
