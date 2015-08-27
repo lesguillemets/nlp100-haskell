@@ -16,5 +16,11 @@ sectPart = do
     _ <- char '='
     return $ m{_level = succ _level}
 
+sects = many normalLine *> sectPart `sepEndBy` many normalLine
+
+normalLine = (noneOf "=\n" *> (anyChar `manyTill` newline))
+    <|>
+    return <$> newline
+
 main = readFile "./uk.txt" >>=
-    mapM_ print . rights . map (parse sectPart "") . lines
+    mapM_ print . (\(Right r) -> r) . parse sects ""
