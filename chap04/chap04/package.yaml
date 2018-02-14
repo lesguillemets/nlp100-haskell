@@ -48,3 +48,5 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - chap04
+    - hspec
+    - attoparsec

@@ -1,7 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Lib where
 
+import Prelude hiding (takeWhile)
 import Control.Applicative
+import Data.Char
 import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
@@ -41,7 +43,7 @@ data Morph = EOS
                    , inflection :: Maybe Text
                    , dictForm :: Text
                    , reading :: Text
-                   , extra :: Maybe Text } deriving (Show)
+                   , extra :: Maybe Text } deriving (Show, Eq)
 
 entries :: Parser [Morph]
 entries = many entry <* endOfInput
@@ -60,22 +62,24 @@ morph :: Parser Morph
 morph =
     (Morph
         <$> (takeTill (== '\t') <* char '\t')
-        <*> val <*> tOrAstC <*> tOrAstC
-        <*> tOrAstC <*> val <*> val <*> textOrAst) <* endOfLine
+        <*> valC <*> tOrAstC <*> tOrAstC
+        <*> tOrAstC <*> valC <*> valC <*> textOrAst) <* endOfLine
 
 parseMorph = parseOnly morph
 
-val :: Parser Text
-val = takeTill (== separator) <* char separator
+valC :: Parser Text
+valC = takeWhile (liftA2 (&&) (/= separator) (/= '\n')) <* char separator
 
 tOrAstC :: Parser (Maybe Text)
 tOrAstC = textOrAst <* char separator
+
 textOrAst :: Parser (Maybe Text)
 textOrAst =
     (string "*" *> return Nothing)
     <|>
-    (Just <$> takeTill (== separator))
+    (Just <$> takeWhile (liftA2 (&&) (/= separator) (/= '\n')))
 
-
+ptest :: Show a => Parser a -> Text -> IO ()
+ptest = parseTest
 separator :: Char
 separator = ','

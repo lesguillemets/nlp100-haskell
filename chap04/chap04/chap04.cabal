@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6dc22b7850fc37b266707aec26d73f8f09006a3ab8b919cb3cc708967ae1661b
+-- hash: 4143854a2f1a8aff941abc13282bd8e1eb3cf35145c12ba22e6828815495505e
 
 name:           chap04
 version:        0.1.0.0
@@ -62,7 +62,9 @@ test-suite chap04-test
       attoparsec
     , base >=4.7 && <5
     , chap04
+    , hspec
     , text
   other-modules:
+      LibSpec
       Paths_chap04
   default-language: Haskell2010
