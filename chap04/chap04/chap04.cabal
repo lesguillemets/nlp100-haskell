@@ -1,0 +1,68 @@
+-- This file has been generated from package.yaml by hpack version 0.20.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 6dc22b7850fc37b266707aec26d73f8f09006a3ab8b919cb3cc708967ae1661b
+
+name:           chap04
+version:        0.1.0.0
+description:    nlp100-chap4
+homepage:       https://github.com/lesguillemets/nlp100-haskell#readme
+bug-reports:    https://github.com/lesguillemets/nlp100-haskell/issues
+author:         lesguillemets
+maintainer:     kgkacko+github@gmail.com
+copyright:      2018 lesguillemets
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+    ChangeLog.md
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/lesguillemets/nlp100-haskell
+
+library
+  hs-source-dirs:
+      src
+  build-depends:
+      attoparsec
+    , base >=4.7 && <5
+    , text
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_chap04
+  default-language: Haskell2010
+
+executable chap04-exe
+  main-is: Main.hs
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      attoparsec
+    , base >=4.7 && <5
+    , chap04
+    , text
+  other-modules:
+      Paths_chap04
+  default-language: Haskell2010
+
+test-suite chap04-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      attoparsec
+    , base >=4.7 && <5
+    , chap04
+    , text
+  other-modules:
+      Paths_chap04
+  default-language: Haskell2010
