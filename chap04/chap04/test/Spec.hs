@@ -26,7 +26,7 @@ spec = do
 
 
 
-sample1 = "吾輩\t名詞,普通名詞,*,*,吾輩,わがはい,代表表記:我が輩/わがはい ,カテゴリ:人\n"
+sample1 = "吾輩\t名詞,普通名詞,*,*,吾輩,わがはい,代表表記:我が輩/わがはい カテゴリ:人\n"
 result1 :: Morph
 result1 =
     Morph "吾輩" "名詞" (Just "普通名詞") Nothing Nothing
