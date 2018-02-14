@@ -5,6 +5,7 @@ import Lib
 import Test.Hspec
 import Data.Attoparsec.Text
 import Data.Either
+import Data.Monoid
 
 main = hspec spec
 
@@ -24,6 +25,21 @@ spec = do
         it "parses normal morph entry : part 2" $
             parseOnly morph sample2 `shouldBe` Right result2
 
+    describe "entry" $ do
+        it "eos as eos" $
+            parseOnly entry "EOS\n" `shouldBe` Right EOS
+        it "parses normal morph entry" $
+            parseOnly entry sample1 `shouldBe` Right result1
+        it "parses normal morph entry : part 2" $
+            parseOnly entry sample2 `shouldBe` Right result2
+
+    describe "entries" $ do
+        it "ex0" $
+            parseOnly entries (sample1 <> sample2)
+                `shouldBe` Right [result1, result2]
+        it "ex0-rv" $
+            parseOnly entries (sample2 <> sample1)
+                `shouldBe` Right [result2, result1]
 
 
 sample1 = "吾輩\t名詞,普通名詞,*,*,吾輩,わがはい,代表表記:我が輩/わがはい カテゴリ:人\n"

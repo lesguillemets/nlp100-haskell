@@ -7,11 +7,10 @@ import Data.Monoid
 main :: IO ()
 main = do
     ptest morph sample1
-    pt "sample.txt"
---     result <- parseFile "./neco.txt.mecab"
---     case result of
---          Left l -> print l
---          Right r  -> print r
+    result <- parseFile "./neco.txt.mecab"
+    case result of
+         Left l -> print l
+         Right r  -> print (length r)
 
 -- morphEx = "ぬ\t助動詞,*,助動詞ぬ型,基本形,ぬ,ぬ,*\n"
 --
