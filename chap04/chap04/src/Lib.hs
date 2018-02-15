@@ -11,7 +11,6 @@ import Data.Attoparsec.Text
 
 parseFile :: FilePath -> IO (Either String [Morph])
 parseFile f = parseOnly entries <$> TIO.readFile f
-pt f = TIO.readFile f >>= parseTest entries 
 
 -- $ mecab -P
 -- bos-feature: BOS/EOS,*,*,*,*,*,*
@@ -48,12 +47,8 @@ data Morph = EOS
 entries :: Parser [Morph]
 entries = many entry <* endOfInput
 
-parseEntries = parseOnly entries
-
 entry :: Parser Morph
 entry = eos <|> morph
-
-parseEntry = parseOnly entry
 
 eos :: Parser Morph
 eos = string "EOS" *> endOfLine *> return EOS
@@ -79,7 +74,5 @@ textOrAst =
     <|>
     (Just <$> takeWhile (liftA2 (&&) (/= separator) (/= '\n')))
 
-ptest :: Show a => Parser a -> Text -> IO ()
-ptest = parseTest
 separator :: Char
 separator = ','
