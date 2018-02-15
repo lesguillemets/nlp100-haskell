@@ -23,6 +23,7 @@ dependencies:
 - base >= 4.7 && < 5
 - text
 - attoparsec
+- containers
 
 library:
   source-dirs: src
@@ -37,6 +38,7 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - chap04
+    - text
 
 tests:
   chap04-test:
