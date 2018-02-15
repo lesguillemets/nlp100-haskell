@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
-import Lib
+import Lib.Parser
 import Data.Monoid
 
 main :: IO ()
