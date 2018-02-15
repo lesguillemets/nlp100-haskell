@@ -14,6 +14,23 @@ data Morph = EOS
                    , reading :: Text
                    , extra :: Maybe Text } deriving (Show, Eq)
 
+get :: (Morph -> a) -> Morph -> Maybe a
+get f m = case m of
+               EOS -> Nothing
+               _ -> Just $ f m
+
+isMorph :: Morph -> Bool
+isMorph EOS = False
+isMorph _ = True
+
 isVerb :: Morph -> Bool
 isVerb EOS = False
 isVerb Morph {..} = partOfSpeech == "動詞"
+
+isNoun :: Morph -> Bool
+isNoun EOS = False
+isNoun Morph {..} = partOfSpeech == "名詞"
+
+isSa_Noun :: Morph -> Bool
+isSa_Noun EOS = False
+isSa_Noun Morph {..} = partOfSpeech1 == Just "サ変名詞"
