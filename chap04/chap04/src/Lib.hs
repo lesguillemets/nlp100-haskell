@@ -47,4 +47,10 @@ add m (State (ms, n)) = State (m:ms, n+1)
 
 getFrequencies :: [Morph] -> [(Text, Int)]
 getFrequencies =
-    map (head &&& length) . group . sort . mapMaybe (get base)
+    map (head &&& length) . group . sort . mapMaybe getIt
+    where
+        -- I don't know when the base is "*".
+        getIt m = case get base m of
+                       (Just "*") -> get surface m
+                       other -> other
+
