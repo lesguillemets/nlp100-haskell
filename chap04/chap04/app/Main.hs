@@ -33,6 +33,8 @@ run mps n = do
             5 -> TIO.putStrLn . mconcat . map surface . getLongestNounChain $ mps
             6 -> mapM_ (TIO.putStrLn . g) freqStats
             7 -> barChart "result07.svg" . take 20 $ freqStats
+            8 -> histgram "result08.svg" $ map (fromIntegral . snd) freqStats
+            9 -> zipF "result09.svg" freqStats
     where
         f (x,y,z) = surface x <> surface y <> surface z
         g (t, n) = t <> "\t" <> (pack . show $ n)

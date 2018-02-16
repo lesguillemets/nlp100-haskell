@@ -19,3 +19,17 @@ barChart fName elems = toFile option fName $ do
 
 option :: FileOptions
 option = FileOptions (800, 600) SVG
+
+histgram :: FilePath -> [Double] -> IO ()
+histgram fName freqs = toFile option fName $ do
+    layout_all_font_styles . font_name .= "IPAexGothic"
+    plot . fmap histToPlot . liftEC $ do
+        plot_hist_values .= freqs
+        plot_hist_norm_func .= const id
+
+zipF :: FilePath -> [(a, Int)] -> IO ()
+zipF fName elems = toFile option fName $
+    plot $ line "zipF" [map (takeLog *** takeLog)  . zip [1..] . map snd $ elems]
+    where
+        takeLog :: Int -> Double
+        takeLog = log . fromIntegral
