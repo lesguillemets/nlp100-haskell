@@ -2,7 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Lib.Morph where
 
-import Data.Text (Text)
+import Data.Text (Text, unpack)
 
 data Morph = EOS
            | Morph { surface :: Text
@@ -34,3 +34,14 @@ isNoun Morph {..} = partOfSpeech == "名詞"
 isSa_Noun :: Morph -> Bool
 isSa_Noun EOS = False
 isSa_Noun Morph {..} = partOfSpeech1 == Just "サ変名詞"
+
+class (Show a) => PrettyPrintable a where
+    pp :: a -> String
+    pp = show
+
+instance PrettyPrintable Morph where
+    pp EOS = "EOS"
+    pp Morph {..} = unpack base
+
+instance PrettyPrintable Text where
+    pp = unpack

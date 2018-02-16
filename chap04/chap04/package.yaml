@@ -24,6 +24,8 @@ dependencies:
 - text
 - attoparsec
 - containers
+- Chart
+- Chart-cairo
 
 library:
   source-dirs: src

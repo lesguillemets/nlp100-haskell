@@ -24,3 +24,5 @@ cabal.project.local~
 *.mecab
 sample.txt
 *.txt
+*.png
+*.svg

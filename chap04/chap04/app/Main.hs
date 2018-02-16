@@ -6,6 +6,7 @@ import System.Environment (getArgs)
 import Lib
 import Lib.Morph
 import Lib.Parser
+import Lib.Visualise
 import Data.Monoid
 import Data.Text (pack)
 import qualified Data.Text.IO as TIO
@@ -30,8 +31,10 @@ run mps n = do
             3 -> mapM_ TIO.putStrLn . getSa_Nouns $ mps
             4 -> mapM_ (TIO.putStrLn .  f) . getPnoQ $ mps
             5 -> TIO.putStrLn . mconcat . map surface . getLongestNounChain $ mps
-            6 -> mapM_ (TIO.putStrLn . g) . sortWith (negate . snd) . getFrequencies $ mps
+            6 -> mapM_ (TIO.putStrLn . g) freqStats
+            7 -> barChart "result07.svg" . take 10 $ freqStats
     where
         f (x,y,z) = surface x <> surface y <> surface z
         g (t, n) = t <> "\t" <> (pack . show $ n)
+        freqStats = sortWith (negate . snd) . getFrequencies $ mps
 
